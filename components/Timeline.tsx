@@ -74,6 +74,19 @@ export default function Timeline() {
       
       </ul>
       <Divider />
+      <Year>2016</Year>
+    <ul>
+      <Step title="Started Interning for Quikr 👔" >
+        Developed & deployed <a
+              href="https://dazzlr.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Dazzlr
+            </a>
+      </Step>
+    </ul>
+    <Divider></Divider>
       {/* <Year>2020</Year> */}
       {isShowingFullTimeline ? (
         <FullTimeline />

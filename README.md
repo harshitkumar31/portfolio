@@ -45,3 +45,8 @@ Create a `.env` file similar to [`.env.example`](https://github.com/harshitkumar
 ## Cloning / Forking
 
 Please review the [license](https://github.com/harshitkumar31/harshitkumar31.github.io/blob/main/LICENSE.txt) and remove all of my personal information (resume, blog posts, images, etc.). -->
+
+## Credits
+
+Inspired from https://github.com/leerob/leerob.io
+
