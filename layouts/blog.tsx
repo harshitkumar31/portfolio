@@ -11,7 +11,7 @@ const editUrl = (slug) =>
   `https://github.com/harshitkumar31/harshitkumar31.github.io/edit/main/data/blog/${slug}.mdx`;
 const discussUrl = (slug) =>
   `https://mobile.twitter.com/search?q=${encodeURIComponent(
-    `https://harshitkumar31.github.io/blog/${slug}`
+    `https://harshitkumar.co.in/blog/${slug}`
   )}`;
 
 export default function BlogLayout({
@@ -22,7 +22,7 @@ export default function BlogLayout({
     <Container
       title={`${post.title} – Harshit Kumar`}
       description={post.summary}
-      image={`https://harshitkumar31.github.io${post.image}`}
+      image={`https://harshitkumar.co.in${post.image}`}
       date={new Date(post.publishedAt).toISOString()}
       type="article"
     >

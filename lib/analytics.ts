@@ -8,7 +8,7 @@ export const useAnalytics = () => {
   useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
       Fathom.load(process.env.NEXT_PUBLIC_FATHOM_SITE_ID, {
-        includedDomains: ['harshitkumar31.github.io']
+        includedDomains: ['harshitkumar.co.in']
       });
     }
 

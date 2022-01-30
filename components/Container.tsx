@@ -51,8 +51,8 @@ export default function Container(props) {
         <title>{meta.title}</title>
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
-        <meta property="og:url" content={`https://harshitkumar31.github.io${router.asPath}`} />
-        <link rel="canonical" href={`https://harshitkumar31.github.io${router.asPath}`} />
+        <meta property="og:url" content={`https://harshitkumar.co.in${router.asPath}`} />
+        <link rel="canonical" href={`https://harshitkumar.co.in${router.asPath}`} />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Harshit Kumar" />
         <meta property="og:description" content={meta.description} />

@@ -5,14 +5,14 @@ import { allBlogs } from '.contentlayer/data';
 async function generate() {
   const feed = new RSS({
     title: 'Harshit Kumar',
-    site_url: 'https://harshitkumar31.github.io',
-    feed_url: 'https://harshitkumar31.github.io/feed.xml'
+    site_url: 'https://harshitkumar.co.in',
+    feed_url: 'https://harshitkumar.co.in/feed.xml'
   });
 
   allBlogs.map((post) => {
     feed.item({
       title: post.title,
-      url: `https://harshitkumar31.github.io/blog/${post.slug}`,
+      url: `https://harshitkumar.co.in/blog/${post.slug}`,
       date: post.publishedAt,
       description: post.summary
     });
