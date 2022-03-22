@@ -1,0 +1,97 @@
+---
+title: 'Creating a Proxy for your GraphQL Server'
+publishedAt: '2022-03-22'
+summary: 'Simple Proxy for your GraphQL server'
+image: '/static/images/gateway-proxy.png'
+---
+I needed to create a proxy server for my GraphQL service to be able to make some decisions before reaching my service.
+
+This article will document how you can do the same with minimal amount of code 😏
+We'll be leveraging awesome utilities provided by [graphql-tools](https://www.graphql-tools.com/)
+
+## Installation
+
+```bash
+npm init -y
+npm i @graphql-tools/delegate @graphql-tools/utils @graphql-tools/wrap apollo-server cross-undici-fetch graphql typescript
+```
+
+## Create an [executor](https://www.graphql-tools.com/docs/remote-schemas#creating-an-executor) 
+
+Executor is a function used capable of retrieving GraphQL results (both introspection & fetching results during a query's execution).
+
+In the executor, I've defined the GraphQL service's URL which I want to proxy - https://graphql.anilist.co/ (an open API to fetch your favourite Anime characters)
+
+```typescript
+const executor =  async ({ document , variables, context }: {document: any, variables: any, context: any}) => {
+    const query = print(document)
+  const fetchResult = await fetch('https://graphql.anilist.co/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...context?.headers
+    },
+    body: JSON.stringify({ query, variables })
+  })
+  return fetchResult.json()
+}
+```
+
+Define applicationProxyResolver
+
+This function is passed to `wrapSchema` method. In this method, you should be able to make some decisions. For example - I wanted to validate some headers & only honour the requests if they had these headers. We'll use `delegateToSchema` to delegate the entire request to our original GraphQL service.
+
+```typescript
+export const applicationProxyResolver = ({
+    subschemaConfig,
+    operation,
+    transformedSchema,
+}: {
+    subschemaConfig: any,
+    operation: any,
+    transformedSchema: any,
+}) => {
+    return (_parent: any, _args: any, context: any, info: any) => {
+        return delegate.delegateToSchema({
+            schema: subschemaConfig,
+            operation,
+            operationName: info!.operation!.name!.value,
+            context,
+            info,
+            transformedSchema,
+        });
+    };
+}
+```
+
+Let's fire up the graphQL proxy server 🚀
+
+```typescript
+const init = async () => {
+    const schema = wrapSchema({
+        schema: await introspectSchema(executor),
+        executor,
+        createProxyingResolver: applicationProxyResolver
+    });
+    
+    const server = new ApolloServer({ 
+        schema,
+    });
+    
+    // The `listen` method launches a web server.
+    server.listen(4001).then(({ url }) => {
+        console.log(`🚀  Server ready at ${url}`);
+    });
+    
+}
+
+init();
+```
+
+![Proxy](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/nhs45egq84jkqutfww8a.png)
+ 
+
+You can find this code at [Github](https://github.com/harshitkumar31/graphql-proxy).
+
+Is there an easier way to do this? Please comment & let me know 😁
+---
