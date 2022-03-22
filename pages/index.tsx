@@ -37,12 +37,12 @@ export default function Home({ videos }) {
         </h3>
         <div className="flex gap-6 flex-col md:flex-row">
           <BlogPostCard
-            title="WIP 1"
-            slug="dataloader"
+            title="Creating a Proxy for your GraphQL Server"
+            slug="graphql-proxy"
             gradient="from-[#D8B4FE] to-[#818CF8]"
           />
           <BlogPostCard
-            title="Getting started with Apollo Federation"
+            title="Does your service need a dataloader?"
             slug="dataloader"
             gradient="from-[#6EE7B7] via-[#3B82F6] to-[#9333EA]"
           />
