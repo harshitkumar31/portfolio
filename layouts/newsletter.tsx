@@ -27,7 +27,7 @@ export default function NewsletterLayout({
               alt="Harshit Kumar"
               height={24}
               width={24}
-              src="/avatar2.jpg"
+              src="/avatar3.jpeg"
               className="rounded-full"
             />
             <p className="ml-2 text-sm text-gray-700 dark:text-gray-300">
