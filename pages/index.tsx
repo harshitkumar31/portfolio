@@ -14,7 +14,7 @@ export default function Home({ videos }) {
               Harshit Kumar
             </h1>
             <h2 className="text-gray-700 dark:text-gray-200 mb-4">
-              Senior Software Engineer at{' '}
+              Staff Software Engineer at{' '}
               <span className="font-semibold">Walmart</span>
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-16">
