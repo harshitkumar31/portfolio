@@ -18,8 +18,11 @@ export default function Home({ videos }) {
               <span className="font-semibold">Walmart</span>
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-16">
-            Experienced Software Engineer with a demonstrated history of working in the internet industry.
-            <br></br>Skilled in Javascript, Node.js, React.js, GraphQL, Python, PHP, C++.
+            Innovative and results-driven Staff Software Engineer at Walmart Global Tech with a strong background in orchestrating GraphQL services. 
+            Proven success in leading cross-functional teams,implementing industry-leading software development practices, and optimising platform offerings.
+            Previous roles include Software Engineer at Quikr, where I spearheaded the development of Progressive Web Apps. 
+            Adept at full-stack development and skilled in various languages and frameworks.
+            <br></br>Skilled in Node.js, React.js, GraphQL, Rust, Python, PHP, C++.
             </p>
           </div>
           <div className="w-[80px] sm:w-[176px] relative mb-8 sm:mb-0 mr-auto">
