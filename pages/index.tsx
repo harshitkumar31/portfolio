@@ -21,9 +21,9 @@ export default function Home({ videos }) {
             Innovative and results-driven Staff Software Engineer at Walmart Global Tech with a strong background in orchestrating GraphQL services. 
             <br></br>Proven success in leading cross-functional teams,implementing industry-leading software development practices, and optimising platform offerings.
             <br></br>Previous roles include Software Engineer at Quikr, where I spearheaded the development of Progressive Web Apps. 
-            <br></br>Adept at full-stack development and skilled in various languages and frameworks.
             <br></br>
-            <br></br>Skilled in Node.js, React.js, GraphQL, Rust, Python, PHP, C++.
+            Adept at full-stack development and skilled in Node.js, React.js, GraphQL, Rust, Python, PHP, C++.
+            <br></br>
             </p>
           </div>
           <div className="w-[80px] sm:w-[176px] relative mb-8 sm:mb-0 mr-auto">
