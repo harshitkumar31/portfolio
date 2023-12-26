@@ -51,8 +51,8 @@ export default function Home({ videos }) {
             gradient="from-[#D8B4FE] to-[#818CF8]"
           />
           <BlogPostCard
-            title="Creating a Google docs plugin"
-            slug="dataloader"
+            title="Resources I wish I knew when I started my career"
+            slug="beginner-resources"
             gradient="from-[#FDE68A] via-[#FCA5A5] to-[#FECACA]"
           />
         </div>

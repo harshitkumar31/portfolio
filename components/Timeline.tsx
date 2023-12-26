@@ -42,13 +42,31 @@ const Step = (props) => {
 
 const FullTimeline = () => (
   <>
-    <Divider />
-    <Year>2018</Year>
+    <Year>2019</Year>
     <ul>
-      <Step title="Started xyz">
-       
+      <Step title="Software Engineer at Walmart">
+        Worked on multiple orchestration services across different stacks (Node.js, Java). 
+        Currently working on new orchestration Graphql services with Apollo Federation.
       </Step>
+
     </ul>
+    <Divider />
+    <Year>2017</Year>
+    <ul>
+      <Step title="Software Engineer at Quikr 👔" >
+        <ul>
+          <li>Developed Quikr&#39;s Progressive Web App using Preact, Redux. PWA Reduced the bounce rates by 25% and improved conversion funnels of all Quikr businesses.</li>
+          <li>Came up with a composable architecture and implemented Shell architecture to enable resource sharing across different verticals for Quikr&#39;s PWA . Built and maintained the unified build process for the same. Built several reusable React components for the Website.</li>
+          <li>Prerendered the shell (header &amp; footer) for a better UI/UX experience to users.</li>
+          <li>Owner of Site Performance Improvements - fixed several performance issues &amp; optimised flows to decrease load time for pages owned by Quikr Core.</li>
+          <li>Worked on Server Side Rendering for the PWA to improve SEO. Exposed it as a solution for use by other verticals too. Decreased the load time from 7 seconds to 2 seconds</li>
+          <li>Worked on Real User Measurement(RUM) - capturing and analyzing each transaction by users of Quikr. Developed a library to push RUM data to Google Analytics.</li>
+          <li>Setup Private npm registry for Quikr. Also setup eslint configurations for all the packages.</li>
+          <li>Developed &amp; maintained Quikr&#39;s Service Worker.</li>
+        </ul>
+
+      </Step>
+      </ul>
     <Divider />
     
     <Year>1995</Year>
@@ -66,27 +84,23 @@ export default function Timeline() {
       <h3 className="font-bold text-2xl md:text-4xl tracking-tight mb-4 mt-8 text-black dark:text-white">
         Timeline
       </h3>
+      <Year>2023</Year>
+      <ul>
+        <Step title="Staff Software Engineer at Walmart">
+          I'm extremely excited about this new role.
+        </Step>
+
+      </ul>
+      <Divider />
       <Year>2021</Year>
       <ul>
         <Step title="Senior Software Engineer at Walmart">
-          I'm extremely excited about this new role.
+          Developing GraphQL Platform for Walmart
         </Step>
       
       </ul>
       <Divider />
-      <Year>2016</Year>
-    <ul>
-      <Step title="Started Interning for Quikr 👔" >
-        Developed & deployed <a
-              href="https://dazzlr.in/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Dazzlr
-            </a>
-      </Step>
-    </ul>
-    <Divider></Divider>
+      
       {/* <Year>2020</Year> */}
       {isShowingFullTimeline ? (
         <FullTimeline />

@@ -12,16 +12,9 @@ export default function About() {
         </h1>
         <div className="mb-8 prose leading-6 text-gray-600 dark:text-gray-400">
           <p>
-            Hey, I’m Harshit. I'm a developer &nbsp;
-            <a
-              href=""
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Blah
-            </a>
+            Hey, I’m Harshit. 
             
-            &nbsp;I work at Walmart as a Senior Software Engineer.
+            &nbsp;I work at Walmart as a Staff Software Engineer.
           </p>
         </div>
         <Timeline />

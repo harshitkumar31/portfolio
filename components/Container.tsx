@@ -40,7 +40,7 @@ export default function Container(props) {
   const meta = {
     title: 'Harshit Kumar',
     description: `Senior Software Engineer, programming enthusiast.`,
-    image: '//static/images/banner1.jpg',
+    image: '/static/images/banner1.jpg',
     type: 'website',
     ...customMeta
   };
