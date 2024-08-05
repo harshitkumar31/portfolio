@@ -10,7 +10,7 @@ export default function BlogPostCard({ title, slug, gradient }) {
   const views = data?.total;
 
   return (
-    <Link href={`/blog/${slug}`}>
+    <Link legacyBehavior href={`/blog/${slug}`}>
       <a
         className={cn(
           'transform hover:scale-[1.01] transition-all',

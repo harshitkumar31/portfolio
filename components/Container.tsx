@@ -13,7 +13,7 @@ function NavItem({ href, text }) {
   const isActive = router.asPath === href;
 
   return (
-    <NextLink href={href}>
+    <NextLink legacyBehavior href={href}>
       <a
         className={cn(
           isActive

@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import Timeline from '../components/Timeline';
 import Container from 'components/Container';
 
