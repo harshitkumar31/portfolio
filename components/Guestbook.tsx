@@ -137,7 +137,7 @@ export default function Guestbook({ fallbackData }) {
         )}
       </div>
       <div className="mt-4 space-y-8">
-        {entries?.map((entry) => (
+        {(entries as any)?.map((entry) => (
           <GuestbookEntry key={entry.id} entry={entry} user={session?.user} />
         ))}
       </div>

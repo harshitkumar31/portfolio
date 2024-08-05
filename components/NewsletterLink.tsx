@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { parseISO, format } from 'date-fns';
-import type { Newsletter } from '.contentlayer/types';
+import type { Newsletter } from '.contentlayer/generated';
 
 export default function NewsletterLink({
   slug,
@@ -8,7 +8,7 @@ export default function NewsletterLink({
 }: Pick<Newsletter, 'publishedAt' | 'slug'>) {
   return (
     <li>
-      <Link href={`/newsletter/${slug}`}>
+      <Link legacyBehavior href={`/newsletter/${slug}`}>
         <a>{format(parseISO(publishedAt), 'MMMM dd, yyyy')}</a>
       </Link>
     </li>

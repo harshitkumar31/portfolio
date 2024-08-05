@@ -79,9 +79,9 @@ export default function Subscribe() {
       ) : (
         <p className="text-sm text-gray-800 dark:text-gray-200">
           {`${
-            subscriberCount > 0 ? subscriberCount.toLocaleString() : '-'
+            Number(subscriberCount) > 0 ? subscriberCount.toLocaleString() : '-'
           } subscribers – `}
-          <Link href="/newsletter">
+          <Link legacyBehavior href="/newsletter">
             <a>34 issues</a>
           </Link>
         </p>
