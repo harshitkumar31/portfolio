@@ -46,7 +46,9 @@ export default function BlogLayout({
           </div>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 min-w-32 md:mt-0">
             {post.readingTime.text}
-            <ViewCounter slug={post.slug} />
+          </p>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400 min-w-32 md:mt-0">
+          <ViewCounter slug={post.slug} />
           </p>
         </div>
         <div className="w-full mt-4 prose dark:prose-dark max-w-none">
