@@ -4,7 +4,6 @@ import components from 'components/MDXComponents';
 import BlogLayout from 'layouts/blog';
 import Tweet from 'components/Tweet';
 import { Blog, allBlogs } from '.contentlayer/generated';
-// import type { Blog } from '.contentlayer/generated';
 
 export default function Post({ post }: { post: Blog; }) {
   const Component = useMDXComponent(post.body.code);
