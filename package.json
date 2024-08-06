@@ -4,14 +4,14 @@
   "private": "true",
   "description": "",
   "scripts": {
-    "build": "contentlayer build && next build",
+    "build": "prisma generate && contentlayer build && next build",
     "cl-build": "contentlayer build",
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^3.8.0",
+    "@prisma/client": "5.17.0",
     "@tailwindcss/typography": "0.5.0",
     "big.js": "6.1.1",
     "classnames": "^2.3.1",
@@ -40,7 +40,7 @@
     "globby": "12.0.2",
     "postcss": "^8.4.5",
     "prettier": "2.5.1",
-    "prisma": "3.8.0",
+    "prisma": "5.17.0",
     "reading-time": "^1.4.0",
     "rehype": "12.0.0",
     "rehype-autolink-headings": "6.1.1",
