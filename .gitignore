@@ -82,3 +82,5 @@ public/feed.xml
 
 # Contentlayer
 .contentlayer
+
+.env.development.local

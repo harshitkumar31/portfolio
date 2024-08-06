@@ -33,7 +33,11 @@ export default async function handler(
         }
       });
 
-      return res.status(200).json({ total: views.count.toString() });
+      if (views)
+        return res.status(200).json({ total: views.count.toString() });
+      else {
+        return res.status(200).json({ total: 0 })
+      }
     }
   } catch (e) {
     return res.status(500).json({ message: e.message });
