@@ -7,8 +7,6 @@ import { Blog, allBlogs } from '.contentlayer/generated';
 // import type { Blog } from '.contentlayer/generated';
 
 export default function Post({ post }: { post: Blog; }) {
-  console.log(`***********`);
-  console.log(post);
   const Component = useMDXComponent(post.body.code);
 
   return (
