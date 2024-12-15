@@ -1,0 +1,38 @@
+---
+title: 'Creating a CLI using Rust'
+publishedAt: '2024-12-13'
+summary: 'Simple tutorial on how to create a CLI using Rust Language'
+image: '/static/images/cli_image.png'
+---
+
+I recently wanted to create a CLI for personal use. Because I was feeling adventurous I went with writing it in Rust.
+
+I've documented how to create a CLI through this post, it uses GraphQL APIs to fetch some dynamic content, so this might be helpful
+if you want to know how to use a GraphQL client in Rust.
+
+### Prerequisites
+
+* Rust - https://www.rust-lang.org/learn/get-started
+
+### Setup a new Rust project
+
+```bash
+cargo new cli_demo
+```
+
+### Adding dependencies
+
+Add the following to the `Cargo.toml` dependencies
+
+```toml
+[dependencies]
+anyhow = { version = "1.0.94" } # Used for creating Errors
+clap = { version = "4.0", features = ["derive"] } # CLI Argument Parser
+dialoguer = "0.11.0" # Interactive User Inputs
+tokio = { version = "1", features = ["full"] } # Used for async programming
+cynic = { version = "3", features = ["http-surf"] } # GraphQL client for rust
+surf = "2" # HTTP client framework
+indicatif = "0.17.9" # Progress Bar for CLI
+```
+
+We'll touch on each of these dependencies as we make progress.
