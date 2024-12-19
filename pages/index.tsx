@@ -79,6 +79,10 @@ export default function Home({ videos }) {
         </h3>
         <div className="my-8 flex w-full flex-col space-y-4">
           <BlogLink
+            name="Creating a CLI using Rust"
+            slug="rust-cli"
+          />
+          <BlogLink
             name="Resources I wish I knew when I started my career"
             slug="beginner-resources"
           />
@@ -86,11 +90,6 @@ export default function Home({ videos }) {
             name="Diagrams as Code"
             slug="diagrams-as-code"
           />
-          <BlogLink
-            name="Creating a Proxy for your GraphQL Server"
-            slug="graphql-proxy"
-          />
-
         </div>
         <Link legacyBehavior href="/blog">
           <a className="flex mt-8 text-gray-600 dark:text-gray-400 leading-7 rounded-lg hover:text-gray-800 dark:hover:text-gray-200 transition-all h-6">

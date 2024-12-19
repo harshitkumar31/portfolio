@@ -33,6 +33,93 @@ tokio = { version = "1", features = ["full"] } # Used for async programming
 cynic = { version = "3", features = ["http-surf"] } # GraphQL client for rust
 surf = "2" # HTTP client framework
 indicatif = "0.17.9" # Progress Bar for CLI
+serde = {version = "1.0.136", features = ["derive"]}
+serde_json = {version = "*"}
+serde_yml = "0.0.12"
 ```
 
 We'll touch on each of these dependencies as we make progress.
+
+<br />
+
+First, we want to be able to execute asynchronous code. For that we'd need to modify our `main.rs` as follows:
+
+```rust
+#[tokio::main]
+async fn main() {
+    println!("Hello, world!");
+}
+```
+
+Next, we want to be able to pass arguments to be able to pass arguments to our CLI.
+To be able to parse arguments, we'll leverage `clap`
+
+```rust
+use clap::Parser;
+
+#[derive(Parser)]
+struct Cli {
+    /// The path to the config file
+    filename: std::path::PathBuf,
+}
+
+#[tokio::main]
+async fn main() {
+    let args = Cli::parse();
+
+    println!("file: {:?}", args.config);
+}
+```
+
+We have declared `filename` as a required argument now. Let's try executing our cli by:
+
+```bash
+cargo run
+```
+
+The program should fail with the following error:
+
+![rust_cli_1](/static/images/rust-cli/cli_1.png)
+
+How do we pass the arguments to the CLI? Just append them to the command as following:
+
+```bash
+cargo run -- config.yaml
+```
+
+Now that we have the argument, let's try loading the contents of the yaml, we'll use `std::fs` and `serde_yml` to achieve that.
+
+We expect the config to be of the following shape:
+
+```yaml
+urls:
+  "rick": "https://rickandmortyapi.com/graphql"
+```
+
+Let's modify our code to read the file passed as the argument.
+We have defined the struct Config as the type returned after we parse the YAML. 
+
+
+
+```rust
+#[derive(Debug, Deserialize, Serialize)]
+struct Config {
+    urls: HashMap<String, String>,
+}
+
+// Existing code
+async fn main() {
+    // Existing code
+    if let Ok(file_str) = std::fs::read_to_string(args.config) {
+        if let Ok(yaml) = serde_yml::from_str::<Config>(&file_str) {
+            println!("{:?}", yaml);
+        }
+    }
+}
+```
+
+
+Once we read the urls from the config file, we'll fire an introspection query to them.
+This is a network call and can take some time, so I'd like to render a progress bar to indicate that our CLI is not idle.
+
+We'll use `indicatif` to help with that.
