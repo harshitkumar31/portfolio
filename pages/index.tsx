@@ -69,7 +69,7 @@ export default function Home({ videos }) {
               alt="Harshit Kumar"
               height={176}
               width={176}
-              src="/avatar3.jpeg"
+              src="/avatar4.jpg"
               className="rounded-full filter"
             />
           </div>
