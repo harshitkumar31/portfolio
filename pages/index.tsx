@@ -79,6 +79,10 @@ export default function Home({ videos }) {
         </h3>
         <div className="my-8 flex w-full flex-col space-y-4">
           <BlogLink
+            name="Setup a NAS + Homelab using Raspberry Pi"
+            slug="setup-a-nas"
+          />
+          <BlogLink
             name="Resources I wish I knew when I started my career"
             slug="beginner-resources"
           />

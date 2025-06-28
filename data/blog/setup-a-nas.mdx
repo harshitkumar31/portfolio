@@ -1,0 +1,178 @@
+---
+title: Setup a NAS + Homelab using Raspberry Pi
+publishedAt: '2025-06-25'
+summary: 'How to set up a Network Attached Storage (NAS) and homelab using Raspberry Pi'
+image: '/static/images/rpi.jpg'
+---
+
+<img src="/static/images/rpi.jpg" height="300" width="300" />
+
+I was tired of using cloud storage solutions and wanted to set up my own Network Attached Storage (NAS) at home.
+I also wanted to peek behind the curtains of how an app like Google photos works, where you can upload your photos and access them from anywhere.
+After some research, I decided to use a Raspberry Pi for this purpose. 
+This article will guide you through the steps to set up your own NAS using a Raspberry Pi.
+It will also guide you through the process of setting up OpenMediaVault, CasaOs, Immich and Tailscale on your Raspberry Pi.
+All of these are quite easy to set up and will give you the ability to access your photos from anywhere.
+
+## Prerequisites
+- [A Raspberry Pi (I used a Raspberry Pi 5 with 8GB RAM)](https://www.amazon.in/dp/B0CK2FCG1K?ref=ppx_yo2ov_dt_b_fed_asin_title)
+- [Active cooler](https://www.amazon.in/dp/B0CZ4DGS18?ref=ppx_yo2ov_dt_b_fed_asin_title)
+- [A microSD card (I used a 64GB SanDisk Ultra)](https://www.amazon.in/dp/B0BDYVC5TD?ref=ppx_yo2ov_dt_b_fed_asin_title)
+- [Radxa SATA HAT](https://evelta.com/radxa-penta-sata-hat-for-rpi5-rock-5c-nas-server-solution/?srsltid=AfmBOopdK8priZIjp7Eb4EftHB_AXzeWMV6XroYQ5BnRA9VoIJO4iGK3)
+- [3 2.5 inch SATA SSDs (I used 3 1TB SSDs)](https://www.amazon.in/dp/B07YD579WM?ref=ppx_yo2ov_dt_b_fed_asin_title)
+- [A USB-C power supply (I used a 5V 3A power supply)](https://www.amazon.in/dp/B0D4DM1D21?ref=ppx_yo2ov_dt_b_fed_asin_title)
+
+
+## Setting up the Raspberry Pi
+1. Download the latest version of Raspberry Pi OS from the [official website](https://www.raspberrypi.org/software/operating-systems/).
+2. Use [Raspberry Pi Imager](https://www.raspberrypi.org/software/) to flash the OS onto the microSD card. You can follow https://www.raspberrypi.com/documentation/computers/getting-started.html for detailed instructions on how to do this.
+3. Insert the microSD card into the Raspberry Pi.
+4. Connect the active cooler to the Raspberry Pi.
+    You will need to break off 3 fins from the active cooler to make the SATA hat fit properly on the Raspberry Pi 5. Jeff Geerling has a video on how to do this: [The ULTIMATE Raspberry Pi 5 NAS](https://youtu.be/l30sADfDiM8?si=iaZ1BJsbp0UnbNWb&t=362)
+5. Connect the Radxa SATA HAT to the Raspberry Pi.
+   Make sure to follow the instructions provided by Radxa for connecting the SATA HAT to the Raspberry Pi. You can find the instructions on their [website](https://docs.radxa.com/en/accessories/penta-sata-hat/penta-for-rpi5)
+6. Connect the 3 SATA SSDs to the Radxa SATA HAT.
+7. Connect the USB-C power supply to the Raspberry Pi.
+8. Power on the Raspberry Pi and wait for it to boot up.
+
+## Setting up OpenMediaVault
+
+We will use OpenMediaVault (OMV) as our NAS operating system. OMV is a free network-attached storage server based on the Debian operating system. It provides a web-based interface to manage your storage, shares, and services.
+
+1. Open a terminal on your Raspberry Pi or connect to it via SSH.
+2. Update the package list and install the necessary dependencies:
+   ```bash
+   sudo apt update
+   ```
+3. Install OpenMediaVault using the following command:
+   ```bash
+   sudo wget -O - https://raw.githubusercontent.com/openmediavault/openmediavault/master/install.sh | sudo bash
+   ```
+4. After the installation is complete, you can access the OpenMediaVault web interface by navigating to `http://<your-raspberry-pi-ip-address>` in your web browser.
+5. Log in with the default credentials:
+   - Username: `admin`
+   - Password: `openmediavault`
+6. Change the default password after logging in for the first time.
+
+
+## Setting up CasaOS
+
+CasaOS is a user-friendly home server operating system that allows you to manage your files, applications, and services easily. It provides a web interface to manage your NAS and other services.
+
+<img src="/static/images/casaos.png" />
+
+1. Open a terminal on your Raspberry Pi or connect to it via SSH.
+2. Install Docker if it is not already installed:
+   ```bash
+   sudo apt install docker.io
+   ```
+3. Start the Docker service:
+   ```bash
+    sudo systemctl start docker
+    ```
+4. Enable Docker to start on boot:
+   ```bash
+   sudo systemctl enable docker
+   ```
+5. Install CasaOS using the following command:
+   ```bash
+   curl -fsSL https://get.casaos.io | sudo bash
+   ```
+6. After the installation is complete, you can access the CasaOS web interface by navigating to `http://<your-raspberry-pi-ip-address>:port` in your web browser.
+   Replace `port` with the port number you specified during the installation (default is 80).
+7. Log in with the default credentials:
+   - Username: `admin`
+   - Password: `casaos`
+8. Change the default password after logging in for the first time.
+
+
+## Setting up Raid 5
+To set up a RAID 5 array with the 3 SATA SSDs connected to the Radxa SATA HAT, you can use OpenMediaVault's web interface. RAID 5 provides a good balance of performance and redundancy, allowing you to lose one drive without losing data.
+1. Open the OpenMediaVault web interface.
+2. Go to `Storage` > `Disks`.
+3. You should see the 3 SATA SSDs listed there. If they are not listed, you may need to format them first. Also check if you have followed the instructions to connect the Radxa SATA HAT and the SSDs properly.
+   - To format a disk, select it and click on `Wipe`.
+   - Choose `Quick` or `Secure` wipe as per your preference.
+   - Click on `Yes` to confirm.
+   - Repeat this for all 3 SSDs.
+4. Go to `Storage` > `RAID Management`.
+5. Click on `Create` to create a new RAID array.
+6. Select `RAID 5` as the RAID level.
+7. Select the 3 SSDs you want to include in the RAID array.
+8. Click on `Create` to create the RAID array.
+9. Wait for the RAID array to be created. This may take some time depending on the size of the SSDs.
+10. Once the RAID array is created, you can see it listed under `Storage` > `RAID Management`.
+11. Go to `Storage` > `File Systems`.
+12. Click on `Create` to create a new file system.
+13. Select the RAID array you just created.
+14. Choose the file system type (e.g., `ext4`) and give it a name.
+15. Click on `Create` to create the file system.
+16. Once the file system is created, you can see it listed under `Storage` > `File Systems`.
+17. Click on the file system and then click on `Mount` to mount it.
+18. Go to `Storage` > `Shared Folders`.
+19. Click on `Add` to create a new shared folder.
+20. Select the file system you just created and give the shared folder a name.
+21. Click on `Save` to create the shared folder.
+22. Go to `Access Rights Management` > `User`.
+23. Click on `Add` to create a new user.
+24. Give the user a name and password.
+25. Assign the user to the shared folder you created earlier.
+26. Click on `Save` to create the user.
+27. Go to `Services` > `SMB/CIFS`.
+28. Enable the SMB/CIFS service.
+29. Go to `Shares` and click on `Add`.
+30. Select the shared folder you created earlier and give it a name.
+31. Click on `Save` to create the share.
+32. You can now access the shared folder from your local network using the SMB/CIFS protocol.
+
+## Setting up Tailscale
+Tailscale is a secure VPN service that allows you to access your devices from anywhere. It creates a secure connection between your devices, allowing you to access your NAS from anywhere in the world.
+1. Open a terminal on your Raspberry Pi or connect to it via SSH.
+2. Install Tailscale using the casaos app store or by following the instructions by BigBearTechWorld on [YouTube](https://www.youtube.com/watch?v=BvVkM-EkmXM).
+3. After the installation is complete, you can access the Tailscale web interface by navigating to `http://<your-raspberry-pi-ip-address>:port` in your web browser.
+   Replace `port` with the port number you specified during the installation (default is 80).
+4. Log in with your Tailscale account credentials.
+5. Follow the instructions to connect your Raspberry Pi to Tailscale.
+6. Once connected, you can access your Raspberry Pi from anywhere using the Tailscale IP address.
+
+
+## Setting up Immich
+
+<img src="/static/images/immich.png" />
+
+Immich is a self-hosted photo and video backup solution that allows you to upload your photos and videos to your NAS and access them from anywhere. It provides a web interface to manage your photos and videos, and it also has mobile apps for iOS and Android.
+1. Open a terminal on your Raspberry Pi or connect to it via SSH.
+2. Install Immich using the casaos app store or by following the instructions on the [Immich GitHub repository](https://github.com/immich-app/immich).
+3. After the installation is complete, you can access the Immich web interface by navigating to `http://<your-raspberry-pi-ip-address>:port` in your web browser.
+   Replace `port` with the port number you specified during the installation (default is 80).
+4. Log in with your Immich account credentials.
+5. Follow the instructions to connect your Raspberry Pi to Immich.
+6. Once connected, you can upload your photos and videos to Immich and access them from anywhere using the Immich web interface or mobile apps.
+
+## Setting up Immich mobile app
+To access your photos and videos on the go, you can install the Immich mobile app on your iOS or Android device.
+1. Download the Immich app from the [App Store](https://apps.apple.com/app/immich/id1676468700) or [Google Play Store](https://play.google.com/store/apps/details?id=com.immich.app).
+2. Open the app and log in with your Immich account credentials (make sure you are on your local network or connected via Tailscale to access your raspberry pi).
+3. Once logged in, you can access your photos and videos from your NAS and upload new photos and videos directly from your mobile device.
+4. You can also enable automatic backup of your photos and videos to Immich by going to the app settings and enabling the "Automatic Backup" option.
+
+## Setting up Portainer on CasaOS
+Portainer is a lightweight management UI that allows you to easily manage your Docker containers, images, networks, and volumes. It provides a web interface to manage your Docker environment.
+1. Open the CasaOS web interface.
+2. Go to the App Store and search for "Portainer".
+3. Click on the Portainer app and then click on "Install".
+4. Follow the instructions to install Portainer.
+5. After the installation is complete, you can access the Portainer web interface by navigating to `http://<your-raspberry-pi-ip-address>:9000` in your web browser.
+6. Log in with the default credentials:
+   - Username: `admin`
+   - Password: `portainer`
+7. Change the default password after logging in for the first time.
+
+## Conclusion
+
+This guide has walked you through the process of setting up a NAS using a Raspberry Pi, OpenMediaVault, CasaOS, Immich, and Tailscale.
+You now have a fully functional NAS that allows you to store, manage, and access your photos and videos from anywhere.
+
+You can also use Portainer to manage your Docker containers and applications on your Raspberry Pi.
+Feel free to explore other applications available in the CasaOS app store to enhance your NAS experience.
+If you have any questions or suggestions, feel free to reach out to me on [Twitter](https://twitter.com/harshitkumar31) or [GitHub](https://github.com/harshitkumar31).
