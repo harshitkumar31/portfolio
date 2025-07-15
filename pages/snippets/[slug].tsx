@@ -5,7 +5,7 @@ import { allSnippets } from '.contentlayer/generated';
 import type { Snippet } from '.contentlayer/generated';
 
 export default function SnippetPage(snippet: Snippet) {
-  const Component = useMDXComponent(snippet.body.raw);
+  const Component = useMDXComponent(snippet.body.code);
 
   return (
     <SnippetLayout snippet={snippet}>
