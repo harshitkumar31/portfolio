@@ -47,14 +47,18 @@ export default function Document(props) {
           name="msapplication-config"
         />
         <meta content="14d2e73487fa6c71" name="yandex-verification" />
+        <meta http-equiv="Content-Security-Policy" content="frame-src youtube.com www.youtube.com harshitkumar31-career-conversations.hf.space"/>
+
         <meta
           content="eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw"
           name="google-site-verification"
         />
       </Head>
       <body className="bg-white dark:bg-black text-white dark:text-black">
+        
         <Main />
         <NextScript />
+        
       </body>
     </Html>
   );

@@ -6,6 +6,7 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
     default-src 'self';
     script-src 'self' 'unsafe-eval' 'unsafe-inline' *.youtube.com *.twitter.com cdn.usefathom.com;
     child-src *.youtube.com *.google.com *.twitter.com;
+    frame-src harshitkumar31-career-conversations.hf.space;
     style-src 'self' 'unsafe-inline' *.googleapis.com;
     img-src * blob: data:;
     media-src 'none';
