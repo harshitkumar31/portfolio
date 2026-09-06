@@ -54,3 +54,13 @@ export type Unsplash = {
   downloads: number;
   views: number;
 };
+
+export type SpotlightItem = {
+  id: string;
+  title: string;
+  category: 'Navigation' | 'Articles' | 'Snippets' | 'Connect';
+  href: string;
+  external?: boolean;
+  hint?: string;
+  keywords?: string;
+};

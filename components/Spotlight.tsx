@@ -1,27 +1,20 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import useSWR from 'swr';
 
-interface SpotlightItem {
-  id: string;
-  title: string;
-  category: 'Navigation' | 'Articles' | 'Snippets' | 'Connect';
-  href: string;
-  external?: boolean;
-  hint?: string;
-}
+import fetcher from 'lib/fetcher';
+import type { SpotlightItem } from 'lib/types';
 
-const SPOTLIGHT_ITEMS: SpotlightItem[] = [
+const STATIC_NAVIGATION_ITEMS: SpotlightItem[] = [
   { id: 'nav-home', title: 'Home', category: 'Navigation', href: '/', hint: 'Return to start' },
   { id: 'nav-about', title: 'About Harshit', category: 'Navigation', href: '/about', hint: 'Staff Engineer biography & journey' },
   { id: 'nav-blog', title: 'Blog & Articles', category: 'Navigation', href: '/blog', hint: 'Distributed systems & engineering thoughts' },
   { id: 'nav-snippets', title: 'Code Snippets', category: 'Navigation', href: '/snippets', hint: 'Reusable functions & developer utilities' },
   { id: 'nav-uses', title: 'Setup & Uses', category: 'Navigation', href: '/uses', hint: 'Hardware, software & homelab gear' },
-  { id: 'nav-chat', title: 'Chat / Ask Me Anything', category: 'Navigation', href: '/chat', hint: 'Interactive AI conversation' },
-  { id: 'art-nas', title: 'Setup a NAS + Homelab using Raspberry Pi', category: 'Articles', href: '/blog/setup-a-nas', hint: 'Storage & self-hosting' },
-  { id: 'art-diagrams', title: 'Diagrams as Code', category: 'Articles', href: '/blog/diagrams-as-code', hint: 'Architecture visualization' },
-  { id: 'art-graphql', title: 'Creating a Proxy for your GraphQL Server', category: 'Articles', href: '/blog/graphql-proxy', hint: 'Federation & routing' },
-  { id: 'art-resources', title: 'Resources I wish I knew when I started my career', category: 'Articles', href: '/blog/beginner-resources', hint: 'Engineering growth' },
-  { id: 'snip-git-wip', title: 'Git WIP Commit Shortcut', category: 'Snippets', href: '/snippets/git-wip', hint: 'Developer workflow' },
+  { id: 'nav-chat', title: 'Chat / Ask Me Anything', category: 'Navigation', href: '/chat', hint: 'Interactive AI conversation' }
+];
+
+const STATIC_CONNECT_ITEMS: SpotlightItem[] = [
   { id: 'social-github', title: 'GitHub Profile', category: 'Connect', href: 'https://github.com/harshitkumar31', external: true, hint: '@harshitkumar31' },
   { id: 'social-linkedin', title: 'LinkedIn Profile', category: 'Connect', href: 'https://www.linkedin.com/in/harshitkumar31', external: true, hint: 'Professional network' },
   { id: 'social-youtube', title: 'YouTube Channel', category: 'Connect', href: 'https://www.youtube.com/channel/UCBQISzmK1iI91Qv0kbZFBWg', external: true, hint: 'Tech videos' }
@@ -38,12 +31,25 @@ export default function Spotlight({ isOpen, onClose }: SpotlightProps) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const filteredItems = query.trim() === ''
-    ? SPOTLIGHT_ITEMS
-    : SPOTLIGHT_ITEMS.filter((item) =>
-        item.title.toLowerCase().includes(query.toLowerCase()) ||
-        item.category.toLowerCase().includes(query.toLowerCase()) ||
-        (item.hint && item.hint.toLowerCase().includes(query.toLowerCase()))
+  const { data: dynamicItems } = useSWR<SpotlightItem[]>('/api/spotlight', fetcher, {
+    revalidateOnFocus: false
+  });
+
+  const allItems: SpotlightItem[] = [
+    ...STATIC_NAVIGATION_ITEMS,
+    ...(dynamicItems || []),
+    ...STATIC_CONNECT_ITEMS
+  ];
+
+  const normalizedQuery = query.trim().toLowerCase();
+
+  const filteredItems = normalizedQuery === ''
+    ? allItems
+    : allItems.filter((item) =>
+        item.title.toLowerCase().includes(normalizedQuery) ||
+        item.category.toLowerCase().includes(normalizedQuery) ||
+        (item.hint && item.hint.toLowerCase().includes(normalizedQuery)) ||
+        item.href.toLowerCase().includes(normalizedQuery)
       );
 
   useEffect(() => {
