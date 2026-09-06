@@ -1,73 +1,126 @@
 import { useState } from 'react';
+import { InferGetStaticPropsType } from 'next';
 
 import Container from 'components/Container';
 import BlogPost from 'components/BlogPost';
-import { InferGetStaticPropsType } from 'next';
+import PageHeader from 'components/PageHeader';
 import { pick } from 'lib/utils';
 import { allBlogs } from '.contentlayer/generated';
+
+const CATEGORIES = ['All', 'Platform & GraphQL', 'Homelab & Hardware', 'Career & Growth'];
 
 export default function Blog({
   posts
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [searchValue, setSearchValue] = useState('');
-  const filteredBlogPosts = posts.filter((post) =>
-    post.title.toLowerCase().includes(searchValue.toLowerCase())
-  );
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const filteredBlogPosts = posts.filter((post) => {
+    const matchesSearch =
+      post.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+      post.summary.toLowerCase().includes(searchValue.toLowerCase());
+
+    if (!matchesSearch) return false;
+
+    if (activeCategory === 'All') return true;
+    if (activeCategory === 'Platform & GraphQL') {
+      return post.slug.includes('graphql') || post.slug.includes('diagrams');
+    }
+    if (activeCategory === 'Homelab & Hardware') {
+      return post.slug.includes('nas');
+    }
+    if (activeCategory === 'Career & Growth') {
+      return post.slug.includes('resources') || post.slug.includes('beginner');
+    }
+    return true;
+  });
 
   return (
     <Container
-      title="Blog – Harshit Kumar"
-      description="Thoughts on the software industry, programming, tech, music, and my personal life."
+      title="Journal & Blog – Harshit Kumar"
+      description="In-depth explorations on distributed systems, GraphQL, homelab hardware, and engineering leadership."
     >
-      <div className="flex flex-col items-start justify-center max-w-2xl mx-auto mb-16">
-        <h1 className="mb-4 text-3xl font-bold tracking-tight text-black md:text-5xl dark:text-white">
-          Blog
-        </h1>
-        <p className="mb-4 text-gray-600 dark:text-gray-400">
-          {`In total, I've written ${posts.length} articles on my blog.
-            Use the search below to filter by title.`}
-        </p>
-        <div className="relative w-full mb-4">
-          <input
-            aria-label="Search articles"
-            type="text"
-            onChange={(e) => setSearchValue(e.target.value)}
-            placeholder="Search articles"
-            className="block w-full px-4 py-2 text-gray-900 bg-white border border-gray-200 rounded-md dark:border-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-gray-100"
-          />
-          <svg
-            className="absolute w-5 h-5 text-gray-400 right-3 top-3 dark:text-gray-300"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      <div className="mx-auto mb-16 w-full max-w-[800px]">
+        {/* Apple Page Header */}
+        <PageHeader
+          eyebrow="Writing & Dispatches"
+          title="The Engineering Journal"
+          description="Exploring the architecture of distributed systems, self-hosting hardware, and the lessons learned shipping software."
+        />
+
+        {/* Apple Search & Filter Bar */}
+        <div className="mb-6 flex flex-col gap-4">
+          {/* Search Capsule Input */}
+          <div className="relative">
+            <input
+              aria-label="Search articles"
+              type="text"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              placeholder="Search by topic, keyword, or title..."
+              className="h-12 w-full rounded-full border border-black/[0.08] bg-black/[0.03] pl-12 pr-10 text-[15px] text-[#1d1d1f] outline-none placeholder:text-[#86868b] focus:border-[#0071e3] focus:bg-white focus:shadow-apple-glow dark:border-white/[0.1] dark:bg-white/[0.06] dark:text-[#f5f5f7] dark:focus:bg-[#161617] transition-all"
             />
-          </svg>
+            <svg
+              className="absolute left-4 top-3.5 h-5 w-5 text-[#86868b]"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            {searchValue && (
+              <button
+                type="button"
+                onClick={() => setSearchValue('')}
+                className="absolute right-3.5 top-3.5 h-5 w-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-[12px] text-[#86868b] hover:text-[#1d1d1f] dark:hover:text-white"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+
+          {/* Segmented Control Category Filter */}
+          <div className="flex flex-wrap gap-1.5 p-1 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.06]">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setActiveCategory(cat)}
+                className={`rounded-xl px-3.5 py-1.5 text-[13px] font-medium transition-all ${
+                  activeCategory === cat
+                    ? 'bg-white text-[#1d1d1f] shadow-xs dark:bg-white/[0.14] dark:text-white'
+                    : 'text-[#6e6e73] hover:text-[#1d1d1f] dark:text-[#86868b] dark:hover:text-white'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
-        {!searchValue && (
-          <>
-            {/* <h3 className="mt-8 mb-4 text-2xl font-bold tracking-tight text-black md:text-4xl dark:text-white">
-              Most Popular
-            </h3> */}
-          </>
-        )}
-        <h3 className="mt-8 mb-4 text-2xl font-bold tracking-tight text-black md:text-4xl dark:text-white">
-          All Posts
-        </h3>
-        {!filteredBlogPosts.length && (
-          <p className="mb-4 text-gray-600 dark:text-gray-400">
-            No posts found.
-          </p>
-        )}
-        {filteredBlogPosts.map((post) => (
-          <BlogPost key={post.title} {...post} />
-        ))}
+
+        {/* Apple Inset Article List */}
+        <div className="apple-inset divide-y divide-black/[0.06] dark:divide-white/[0.08]">
+          {filteredBlogPosts.length === 0 ? (
+            <div className="py-16 text-center">
+              <p className="text-[17px] font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">
+                No articles found
+              </p>
+              <p className="mt-1 text-[14px] text-[#86868b]">
+                Try adjusting your search query or switching categories.
+              </p>
+            </div>
+          ) : (
+            filteredBlogPosts.map((post) => (
+              <BlogPost key={post.title} {...post} />
+            ))
+          )}
+        </div>
       </div>
     </Container>
   );

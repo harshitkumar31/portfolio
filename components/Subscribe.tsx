@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react';
-import Link from 'next/link';
 import useSWR from 'swr';
 import { trackGoal } from 'fathom-client';
 
@@ -11,80 +10,97 @@ import LoadingSpinner from 'components/LoadingSpinner';
 
 export default function Subscribe() {
   const [form, setForm] = useState<FormState>({ state: Form.Initial });
-  const inputEl = useRef(null);
+  const inputEl = useRef<HTMLInputElement>(null);
   const { data } = useSWR<Subscribers>('/api/subscribers', fetcher);
-  const subscriberCount = new Number(data?.count);
+  const subscriberCount = Number(data?.count || 0);
 
-  const subscribe = async (e) => {
+  const subscribe = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!inputEl.current?.value) return;
+
     setForm({ state: Form.Loading });
 
-    const res = await fetch('/api/subscribe', {
-      body: JSON.stringify({
-        email: inputEl.current.value
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    });
+    try {
+      const res = await fetch('/api/subscribe', {
+        body: JSON.stringify({
+          email: inputEl.current.value
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
+      });
 
-    const { error } = await res.json();
-    if (error) {
+      const { error } = await res.json();
+      if (error) {
+        setForm({
+          state: Form.Error,
+          message: error
+        });
+        return;
+      }
+
+      trackGoal('JYFUFMSF', 0);
+      inputEl.current.value = '';
+      setForm({
+        state: Form.Success,
+        message: `Welcome to the dispatch! You're on the list.`
+      });
+    } catch (err: any) {
       setForm({
         state: Form.Error,
-        message: error
+        message: 'Something went wrong. Please try again later.'
       });
-      return;
     }
-
-    trackGoal('JYFUFMSF', 0);
-    inputEl.current.value = '';
-    setForm({
-      state: Form.Success,
-      message: `Hooray! You're now on the list.`
-    });
   };
 
   return (
-    <div className="border border-blue-200 rounded p-6 my-4 w-full dark:border-gray-800 bg-blue-50 dark:bg-blue-opaque">
-      <p className="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100">
-        Subscribe to the newsletter
+    <div className="apple-card my-8 w-full p-6 sm:p-8">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+        <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#0071e3] dark:text-[#2997ff]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#30d158]" />
+          VIP Dispatch
+        </span>
+        <span className="text-[12px] text-[#86868b]">
+          {Number(subscriberCount) > 0 ? `${subscriberCount.toLocaleString()} engineers subscribed` : 'No spam. Unsubscribe anytime.'}
+        </span>
+      </div>
+
+      <h3 className="text-[22px] font-semibold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7] sm:text-[26px]">
+        Stay updated on systems, architecture & tech.
+      </h3>
+      <p className="mt-2 text-[15px] leading-relaxed text-[#6e6e73] dark:text-[#a1a1a6] max-w-xl">
+        Early dispatches regarding distributed computing, GraphQL, homelab experiments, and lessons learned building platform systems.
       </p>
-      <p className="my-1 text-gray-800 dark:text-gray-200">
-        Get emails from me about web development, tech, and early access to new
-        articles.
-      </p>
-      <form className="relative my-4" onSubmit={subscribe}>
+
+      <form className="relative mt-6 max-w-lg" onSubmit={subscribe}>
         <input
           ref={inputEl}
-          aria-label="Email for newsletter"
+          aria-label="Email address"
           placeholder="tim@apple.com"
           type="email"
           autoComplete="email"
           required
-          className="px-4 py-2 mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full border-gray-300 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 pr-32"
+          className="block h-12 w-full rounded-full border border-black/[0.08] bg-black/[0.03] px-5 pr-32 text-[15px] text-[#1d1d1f] outline-none placeholder:text-[#86868b] focus:border-[#0071e3] focus:bg-white focus:shadow-apple-glow dark:border-white/[0.1] dark:bg-white/[0.06] dark:text-[#f5f5f7] dark:focus:bg-[#161617] transition-all"
         />
         <button
-          className="flex items-center justify-center absolute right-1 top-1 px-4 pt-1 font-medium h-8 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded w-28"
+          className="absolute right-1.5 top-1.5 flex h-9 px-5 items-center justify-center rounded-full bg-[#0071e3] text-[13px] font-medium text-white shadow-xs transition-all hover:bg-[#0077ed] active:scale-95 disabled:opacity-50"
           type="submit"
+          disabled={form.state === Form.Loading}
         >
           {form.state === Form.Loading ? <LoadingSpinner /> : 'Subscribe'}
         </button>
       </form>
-      {form.state === Form.Error ? (
-        <ErrorMessage>{form.message}</ErrorMessage>
-      ) : form.state === Form.Success ? (
-        <SuccessMessage>{form.message}</SuccessMessage>
-      ) : (
-        <p className="text-sm text-gray-800 dark:text-gray-200">
-          {`${
-            Number(subscriberCount) > 0 ? subscriberCount.toLocaleString() : '-'
-          } subscribers – `}
-          <Link legacyBehavior href="/newsletter">
-            <a>34 issues</a>
-          </Link>
-        </p>
+
+      {form.state === Form.Error && (
+        <div className="mt-4">
+          <ErrorMessage>{form.message}</ErrorMessage>
+        </div>
+      )}
+      {form.state === Form.Success && (
+        <div className="mt-4">
+          <SuccessMessage>{form.message}</SuccessMessage>
+        </div>
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import Container from 'components/Container';
 import Subscribe from 'components/Subscribe';
 import NewsletterLink from 'components/NewsletterLink';
+import PageHeader from 'components/PageHeader';
 import { allNewsletters } from '.contentlayer/generated';
 import { pick } from 'lib/utils';
 
@@ -10,31 +11,26 @@ export default function Newsletter({ newsletters }) {
       title="Newsletter – Harshit Kumar"
       description="Thoughts on the software industry, programming, tech, videography, music, and my personal life."
     >
-      <div className="flex flex-col items-start justify-center max-w-2xl mx-auto mb-16">
-        <h1 className="mb-4 text-3xl font-bold tracking-tight text-black md:text-5xl dark:text-white">
-          Newsletter
-        </h1>
-        <p className="mb-4 text-gray-600 dark:text-gray-400">
-          My newsletter provides a behind-the-scenes look into what I'm working
-          on and writing about. I frequently share some of my favorite articles
-          I've read, as well as anything fascinating about technology.
-        </p>
+      <div className="mx-auto mb-8 w-full max-w-[720px]">
+        <PageHeader
+          eyebrow="Inbox"
+          title="Newsletter"
+          description="A behind-the-scenes look at what I'm working on and writing about — favorite articles, and anything fascinating about technology."
+        />
         <Subscribe />
-        <h3 className="mt-8 mb-4 text-2xl font-bold tracking-tight text-black md:text-4xl dark:text-white">
+        <h3 className="mb-4 mt-12 text-[28px] font-semibold tracking-[-0.022em] text-[#1d1d1f] dark:text-[#f5f5f7]">
           Archive
         </h3>
-        <div className="prose dark:prose-dark">
-          <ul>
-            {newsletters
-              .sort(
-                (a, b) =>
-                  Number(new Date(b.publishedAt)) -
-                  Number(new Date(a.publishedAt))
-              )
-              .map((newsletter) => (
-                <NewsletterLink key={newsletter.title} {...newsletter} />
-              ))}
-          </ul>
+        <div className="apple-inset divide-y divide-black/[0.06] dark:divide-white/[0.08]">
+          {newsletters
+            .sort(
+              (a, b) =>
+                Number(new Date(b.publishedAt)) -
+                Number(new Date(a.publishedAt))
+            )
+            .map((newsletter) => (
+              <NewsletterLink key={newsletter.title} {...newsletter} />
+            ))}
         </div>
       </div>
     </Container>
