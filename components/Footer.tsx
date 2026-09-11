@@ -111,7 +111,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-black/[0.06] pt-6 dark:border-white/[0.08] text-[12px] text-[#86868b]">
           <div>
             <p>
-              Copyright &copy; {new Date().getFullYear()} Harshit Kumar. Designed in the spirit of Apple.
+              Copyright &copy; {new Date().getFullYear()} Harshit Kumar.
             </p>
             <p className="mt-0.5 text-[11px] text-[#86868b]">
               Crafted in Bengaluru & Bentonville. All rights reserved.

@@ -35,3 +35,4 @@ export default function handler(
 
   return res.status(200).json(items);
 }
+

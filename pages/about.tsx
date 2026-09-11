@@ -27,14 +27,14 @@ export default function About() {
   return (
     <Container
       title="About – Harshit Kumar"
-      description="Staff Software Engineer at Walmart Global Tech. Architecting high-concurrency GraphQL platforms, resilient distributed systems, and developer tooling."
+      description="Principal Software Engineer at Walmart Global Tech. Architecting high-concurrency GraphQL platforms, resilient distributed systems, and developer tooling."
     >
       <div className="mx-auto mb-16 w-full max-w-[800px]">
         {/* Apple Page Header */}
         <PageHeader
           eyebrow="Leadership & Platform Architecture"
           title="Building leverage through resilient systems and developer platforms."
-          description="Hey, I’m Harshit. I work at Walmart Global Tech as a Staff Software Engineer, focused on GraphQL orchestration, schema federation, and the developer tooling around it."
+          description="Hey, I’m Harshit. I work at Walmart Global Tech as a Principal Software Engineer, focused on GraphQL orchestration, schema federation, and the developer tooling around it."
         />
 
         {/* Quick Stat Matrix Grid (Apple Spec Sheet Style) */}
@@ -44,7 +44,7 @@ export default function About() {
               Current Role
             </p>
             <p className="mt-1 text-[15px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">
-              Staff Engineer
+              Principal Engineer
             </p>
             <p className="text-[12px] text-[#6e6e73] dark:text-[#86868b]">Walmart Global Tech</p>
           </div>
@@ -100,7 +100,7 @@ export default function About() {
             <div className="overflow-hidden rounded-apple-lg border border-black/[0.08] bg-white p-2 shadow-apple-lg dark:border-white/[0.1] dark:bg-apple-card-dark">
               <div className="overflow-hidden rounded-apple">
                 <Image
-                  alt="Harshit Kumar – Staff Software Engineer"
+                  alt="Harshit Kumar – Principal Software Engineer"
                   src="/avatar4.jpg"
                   width={896}
                   height={1152}
@@ -113,7 +113,7 @@ export default function About() {
                   Harshit Kumar
                 </p>
                 <p className="text-[12px] text-[#6e6e73] dark:text-[#86868b]">
-                  Staff Software Engineer
+                  Principal Software Engineer
                 </p>
               </div>
             </div>

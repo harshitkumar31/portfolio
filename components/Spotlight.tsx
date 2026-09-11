@@ -7,7 +7,7 @@ import type { SpotlightItem } from 'lib/types';
 
 const STATIC_NAVIGATION_ITEMS: SpotlightItem[] = [
   { id: 'nav-home', title: 'Home', category: 'Navigation', href: '/', hint: 'Return to start' },
-  { id: 'nav-about', title: 'About Harshit', category: 'Navigation', href: '/about', hint: 'Staff Engineer biography & journey' },
+  { id: 'nav-about', title: 'About Harshit', category: 'Navigation', href: '/about', hint: 'Principal Engineer biography & journey' },
   { id: 'nav-blog', title: 'Blog & Articles', category: 'Navigation', href: '/blog', hint: 'Distributed systems & engineering thoughts' },
   { id: 'nav-snippets', title: 'Code Snippets', category: 'Navigation', href: '/snippets', hint: 'Reusable functions & developer utilities' },
   { id: 'nav-uses', title: 'Setup & Uses', category: 'Navigation', href: '/uses', hint: 'Hardware, software & homelab gear' },

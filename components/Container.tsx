@@ -41,8 +41,8 @@ export default function Container(props) {
   const { children, ...customMeta } = props;
   const router = useRouter();
   const meta = {
-    title: 'Harshit Kumar – Staff Software Engineer',
-    description: 'Staff Software Engineer at Walmart Global Tech, focused on GraphQL and distributed platforms.',
+    title: 'Harshit Kumar – Principal Software Engineer',
+    description: 'Principal Software Engineer at Walmart Global Tech, focused on GraphQL and distributed platforms.',
     image: '/static/images/banner1.jpg',
     type: 'website',
     ...customMeta

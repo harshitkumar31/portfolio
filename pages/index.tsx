@@ -4,7 +4,6 @@ import Link from 'next/link';
 import useSWR from 'swr';
 
 import Container from 'components/Container';
-import Subscribe from 'components/Subscribe';
 import fetcher from 'lib/fetcher';
 import { Views as ViewsType } from 'lib/types';
 
@@ -111,7 +110,7 @@ export default function Home() {
           <div>
             {/* Live Role Badge */}
             <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#86868b]">
-              Staff Software Engineer &middot; Platform Architecture
+              Principal Software Engineer &middot; Platform Architecture
             </p>
 
             {/* Apple Display Typography */}
@@ -191,7 +190,7 @@ export default function Home() {
             <div className="absolute -inset-1 rounded-[44px] bg-gradient-to-tr from-[#0071e3]/20 via-purple-500/10 to-[#30d158]/10 blur-xl opacity-60 dark:opacity-30" />
             <div className="relative h-full w-full overflow-hidden rounded-[36px] bg-white p-2 shadow-apple-lg dark:bg-[#1c1c1e] border border-black/[0.06] dark:border-white/[0.1]">
               <Image
-                alt="Harshit Kumar – Staff Software Engineer"
+                alt="Harshit Kumar – Principal Software Engineer"
                 src="/avatar4.jpg"
                 height={280}
                 width={280}
@@ -286,9 +285,6 @@ export default function Home() {
             />
           </div>
         </section>
-
-        {/* Apple VIP Dispatch */}
-        <Subscribe />
       </div>
     </Container>
   );

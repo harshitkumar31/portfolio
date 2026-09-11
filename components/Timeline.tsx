@@ -109,12 +109,24 @@ export default function Timeline() {
 
       <div className="relative">
         <MilestoneCard
-          year="2023 – Present"
-          role="Staff Software Engineer"
+          year="2026 – Present"
+          role="Principal Software Engineer"
           company="Walmart Global Tech"
           period="Bengaluru / Hybrid"
           isCurrent
-          description="Leading platform teams architecting GraphQL orchestration layers, schema governance, and developer tooling to enable autonomous domain teams."
+          description="Driving architectural strategy for enterprise platform infrastructure, GraphQL federation at scale, schema governance, and engineering leverage across distributed organizations."
+          highlights={[
+            'Directing technical architecture for enterprise-scale GraphQL platform and aggregation layers.',
+            'Establishing organizational standards for schema evolution, contract boundaries, and paved-road developer platforms.'
+          ]}
+        />
+
+        <MilestoneCard
+          year="2023 – 2026"
+          role="Staff Software Engineer"
+          company="Walmart Global Tech"
+          period="3 Years"
+          description="Led platform teams architecting GraphQL orchestration layers, schema governance, and developer tooling to enable autonomous domain teams."
           highlights={[
             'Spearheading architecture for unified GraphQL platform layers and schema composition.',
             'Driving developer tooling and paved-road initiatives to eliminate cross-team cognitive overhead.',
