@@ -36,29 +36,29 @@ export default function Document(props) {
           type="image/png"
         />
         <link
-          color="#4a9885"
+          color="#0071e3"
           href="/static/favicons/safari-pinned-tab.svg"
           rel="mask-icon"
         />
-        <meta content="#ffffff" name="theme-color" />
-        <meta content="#ffffff" name="msapplication-TileColor" />
+        <meta content="#f5f5f7" name="theme-color" />
+        <meta content="#f5f5f7" name="msapplication-TileColor" />
         <meta
           content="/static/favicons/browserconfig.xml"
           name="msapplication-config"
         />
         <meta content="14d2e73487fa6c71" name="yandex-verification" />
-        <meta http-equiv="Content-Security-Policy" content="frame-src youtube.com www.youtube.com harshitkumar31-career-conversations.hf.space"/>
-
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="frame-src youtube.com www.youtube.com harshitkumar31-career-conversations.hf.space"
+        />
         <meta
           content="eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw"
           name="google-site-verification"
         />
       </Head>
-      <body className="bg-white dark:bg-black text-white dark:text-black">
-        
+      <body className="bg-[#f5f5f7] text-[#1d1d1f] antialiased dark:bg-black dark:text-[#f5f5f7]">
         <Main />
         <NextScript />
-        
       </body>
     </Html>
   );

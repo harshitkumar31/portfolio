@@ -17,30 +17,32 @@ export default function NewsletterLayout({
       date={new Date(newsletter.publishedAt).toISOString()}
       type="article"
     >
-      <article className="flex flex-col items-start justify-center w-full max-w-2xl mx-auto mb-16">
-        <h1 className="mb-4 text-3xl font-bold tracking-tight text-black md:text-5xl dark:text-white">
+      <article className="mx-auto mb-16 w-full max-w-[720px]">
+        <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#86868b]">
+          Newsletter
+        </p>
+        <h1 className="mb-6 text-[36px] font-semibold tracking-[-0.025em] text-[#1d1d1f] dark:text-[#f5f5f7] md:text-[48px]">
           {newsletter.title}
         </h1>
-        <div className="flex flex-col items-start justify-between w-full mt-2 md:flex-row md:items-center">
+        <div className="mb-10 flex flex-col justify-between gap-3 border-b border-black/[0.06] pb-6 text-[13px] text-[#6e6e73] dark:border-white/[0.1] md:flex-row md:items-center">
           <div className="flex items-center">
             <Image
               alt="Harshit Kumar"
-              height={24}
-              width={24}
+              height={28}
+              width={28}
               src="/avatar4.jpg"
               className="rounded-full"
             />
-            <p className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-              {'Harshit Kumar / '}
-              {format(parseISO(newsletter.publishedAt), 'MMMM dd, yyyy')}
+            <p className="ml-2.5">
+              Harshit Kumar
+              <span className="mx-1.5 text-[#c7c7cc]">·</span>
+              {format(parseISO(newsletter.publishedAt), 'MMMM d, yyyy')}
             </p>
           </div>
-          <p className="mt-2 text-sm text-gray-500 min-w-32 md:mt-0">
-            {newsletter.readingTime.text}
-          </p>
+          <p>{newsletter.readingTime.text}</p>
         </div>
-        <div className="w-full prose dark:prose-dark">{children}</div>
-        <div className="mt-8">
+        <div className="prose dark:prose-dark w-full">{children}</div>
+        <div className="mt-10">
           <Subscribe />
         </div>
       </article>
